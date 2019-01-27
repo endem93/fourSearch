@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = 'fourSearch'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task start(type: JavaExec) {
+    dependsOn build
+    classpath = files('build/libs/fourSearch-0.1.0.jar')
+    classpath += sourceSets.main.runtimeClasspath
+    main = 'search/SearchApplication'
+}
+
+sourceCompatibility = 1.9
+targetCompatibility = 1.9
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
