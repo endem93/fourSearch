@@ -17,21 +17,18 @@ import search.service.FourSquareService;
 public class FourSquareServiceImpl implements FourSquareService {
     private final CredentialsProvider credentialsProvider;
     private final String fourSquareExploreEndpoint;
+    private RestTemplate restTemplate;
 
     @Autowired
     FourSquareServiceImpl(final CredentialsProvider credentialsProvider,
                           @Value("${fourSquare.url}") final String fourSquareExploreEndpoint) {
         this.credentialsProvider = credentialsProvider;
         this.fourSquareExploreEndpoint = fourSquareExploreEndpoint;
-    }
-
-    public CredentialsProvider getCredentialsProvider() {
-        return credentialsProvider;
+        restTemplate = new RestTemplate();
     }
 
     @Override
     public String getRecommendedPlaces(String location) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
@@ -45,5 +42,9 @@ public class FourSquareServiceImpl implements FourSquareService {
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class, entity);
         return response.toString();
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 }
