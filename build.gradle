@@ -35,6 +35,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.projectlombok:lombok:1.16.10")
     compile("org.codehaus.groovy:groovy-json:2.0.1")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    testCompileOnly("org.projectlombok:lombok:1.16.10")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

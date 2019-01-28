@@ -51,7 +51,6 @@ public class FourSquareServiceImplTest {
         response1.setGroups(Collections.singletonList(group));
         exploreResponse.setResponse(response1);
         fourSquareService.setRestTemplate(restTemplate);
-        when(response.toString()).thenReturn("Response");
         when(response.getBody()).thenReturn(exploreResponse);
         when(restTemplate.getForEntity(any(String.class), eq(ExploreResponse.class), any(HttpEntity.class))).thenReturn(response);
         when(credentialsProvider.getFourSquareID()).thenReturn("id");

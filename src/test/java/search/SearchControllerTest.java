@@ -22,7 +22,10 @@ public class SearchControllerTest {
 
     @Test
     public void getLocations() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/recommend").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/recommend")
+                .param("location", "london")
+                .param("limit", "1")
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }

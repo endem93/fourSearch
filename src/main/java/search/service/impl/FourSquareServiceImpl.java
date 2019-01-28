@@ -21,6 +21,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class FourSquareServiceImpl implements FourSquareService {
+    private static final String CLIENT_ID = "client_id";
+    private static final String CLIENT_SECRET = "client_secret";
+    private static final String V = "v";
+    private static final String NEAR = "near";
+    private static final String LIMIT = "limit";
     private final CredentialsProvider credentialsProvider;
     private final String fourSquareExploreEndpoint;
     private RestTemplate restTemplate;
@@ -39,11 +44,11 @@ public class FourSquareServiceImpl implements FourSquareService {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(fourSquareExploreEndpoint)
-                .queryParam("client_id", credentialsProvider.getFourSquareID())
-                .queryParam("client_secret", credentialsProvider.getFourSquareSecret())
-                .queryParam("v", credentialsProvider.getVersion())
-                .queryParam("near", location)
-                .queryParam("limit", limit);
+                .queryParam(CLIENT_ID, credentialsProvider.getFourSquareID())
+                .queryParam(CLIENT_SECRET, credentialsProvider.getFourSquareSecret())
+                .queryParam(V, credentialsProvider.getVersion())
+                .queryParam(NEAR, location)
+                .queryParam(LIMIT, limit);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<ExploreResponse> response = restTemplate.getForEntity(builder.toUriString(), ExploreResponse.class, entity);
@@ -61,7 +66,7 @@ public class FourSquareServiceImpl implements FourSquareService {
         return new JsonBuilder(recommendations).toPrettyString() + "\n";
     }
 
-    public void setRestTemplate(RestTemplate restTemplate) {
+    void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 }
